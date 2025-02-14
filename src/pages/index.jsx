@@ -7,7 +7,6 @@ import { useState, useEffect } from 'react'
 function Homepage() {
     const [posts, setPosts] = useState(postsData)
     const [totalPosts, setTotalPosts] = useState(0)
-    const [externalPosts, setExternalPosts] = useState([])
 
     const onSearchChange = (search) => {        
         const filteredPosts = postsData.filter((post) => {
@@ -16,17 +15,6 @@ function Homepage() {
         setPosts(filteredPosts)
         setTotalPosts(filteredPosts.length)
     }
-
-    useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(response => response.json())
-            .then(json => setExternalPosts(json))
-    }, [])
-
-    useEffect(() => {
-        console.log('new search posts')
-
-    }, [posts])
 
     return (
         <>
@@ -37,12 +25,7 @@ function Homepage() {
                     return <Article {...props} key={index}  />
                 })
             }
-            <h2>External Posts</h2>
-            {
-                externalPosts.map((post, index) => {
-                    return <div key={index}>- {post.title}</div>
-                })
-            }
+  
         </>
     )
 }
